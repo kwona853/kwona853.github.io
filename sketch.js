@@ -16,15 +16,14 @@ let flashColor = null;
 let particles = [];
 let sound;
 
-function preload() {
-  sound = loadSound('your-sound-file.mp3'); // Replace with your actual MP3 file path
-}
+/*function preload() {
+  sound = loadSound('your-sound-file.mp3');
+}*/ //only working on p5 website
 
 function setup() {
   createCanvas(800, 400);
 
-  // Play sound automatically when sketch starts
-  sound.loop();
+  //sound.loop();
 
   buses = [
     { color: busColors[0], passengersOn: 5, passengersOff: 2, passengerShapes: [0, 1, 2, 0, 1] },
@@ -42,7 +41,6 @@ function draw() {
     background(220);
   }
 
-  // Particle effect
   for (let i = particles.length - 1; i >= 0; i--) {
     particles[i].update();
     particles[i].show();
@@ -51,10 +49,8 @@ function draw() {
     }
   }
 
-  // Draw the bus
   drawBus(busX, 200);
 
-  // Move the bus to the stop position
   if (!busStopped && busX < busStopPosition) {
     busX += busSpeed;
     if (busX >= busStopPosition) {
@@ -64,7 +60,6 @@ function draw() {
     }
   }
 
-  // Draw and move passengers
   let allPassengersBoarded = true;
   let allPassengersAlighted = true;
 
@@ -110,7 +105,6 @@ function loadNextBus() {
   passengersBoarded = 0;
   passengersAlighted = 0;
 
-  // Unload passengers getting off
   for (let i = 0; i < buses[currentBusIndex].passengersOff; i++) {
     if (currentPassengers[i]) {
       currentPassengers[i].status = 'alighting';
@@ -118,7 +112,6 @@ function loadNextBus() {
     }
   }
 
-  // Load new passengers
   let newPassengers = buses[currentBusIndex].passengerShapes.map((shapeIndex, i) => {
     return {
       shape: shapes[shapeIndex],
@@ -137,22 +130,18 @@ function drawBus(x, y) {
   fill(buses[currentBusIndex].color);
   rect(x, y, 240, 80, 20); 
 
-  // Bus windows
   fill(255);
   rect(x + 20, y + 15, 40, 30, 5);  
   rect(x + 70, y + 15, 40, 30, 5);  
   rect(x + 120, y + 15, 40, 30, 5); 
 
-  // Bus door
   fill(200);
   rect(x + 170, y + 15, 40, 50, 5);
 
-  // Bus wheels
   fill(0);
   ellipse(x + 50, y + 85, 40, 40);
   ellipse(x + 170, y + 85, 40, 40);
 
-  // Bus top
   fill(buses[currentBusIndex].color);
   arc(x + 120, y + 5, 240, 40, PI, TWO_PI);
 }
@@ -168,20 +157,17 @@ function drawPassenger(passenger) {
   }
 }
 
-// Mouse click handler for full-screen flash effect
 function mousePressed() {
   flashColor = color(random(255), random(255), random(255));
-  setTimeout(() => flashColor = null, 200);  // Reset after a short delay
+  setTimeout(() => flashColor = null, 200); 
 }
 
-// Key press handler for more dramatic particle effect
 function keyPressed() {
   for (let i = 0; i < 150; i++) { 
     particles.push(new Particle(random(width), random(height)));
   }
 }
 
-// Particle class for the explosion effect
 class Particle {
   constructor(x, y) {
     this.x = x;
@@ -200,7 +186,7 @@ class Particle {
   show() {
     noStroke();
     fill(255, this.alpha);
-    ellipse(this.x, this.y, random(10, 20)); // Larger particles
+    ellipse(this.x, this.y, random(10, 20));
   }
 
   isFinished() {
