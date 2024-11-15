@@ -17,7 +17,7 @@ let particles = [];
 let sound;
 
 /*function preload() {
-  sound = loadSound('your-sound-file.mp3');
+  sound = loadSound('sound.mp3');
 }*/ //only working on p5 website
 
 function setup() {
